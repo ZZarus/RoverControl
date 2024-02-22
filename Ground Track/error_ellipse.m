@@ -1,6 +1,6 @@
 
 % Create some random data
-
+axis square
 data = [finalState(:,1) finalState(:,2)];
 
 % Calculate the eigenvectors and eigenvalues
@@ -57,20 +57,21 @@ r_ellipse = [ellipse_x_r;ellipse_y_r]' * R;
 % Draw the error ellipse
 plot(r_ellipse(:,1) + X0,r_ellipse(:,2) + Y0,'-')
 hold on;
-
+axis square
+hXLabel = xlabel('In-Track Miss (m)');
+hYLabel = ylabel('Cross-Track Miss (m)');
 % Plot the original data
 plot(data(:,1), data(:,2), '.');
-mindata = min(min(data));
-maxdata = max(max(data));
-Xlim([mindata-3, maxdata+3]);
-Ylim([mindata-3, maxdata+3]);
-hold on;
+plot(0,0,'X','Color','g')
+% mindata = min(min(data));
+% maxdata = max(max(data));
+% Xlim([mindata-3, maxdata+3]);
+% Ylim([mindata-3, maxdata+3]);
+% hold on;
+% 
+% % Plot the eigenvectors
+% quiver(X0, Y0, largest_eigenvec(1)*sqrt(largest_eigenval), largest_eigenvec(2)*sqrt(largest_eigenval), '-m', 'LineWidth',2);
+% quiver(X0, Y0, smallest_eigenvec(1)*sqrt(smallest_eigenval), smallest_eigenvec(2)*sqrt(smallest_eigenval), '-g', 'LineWidth',2);
+% hold on;
+% % Set the axis labels
 
-% Plot the eigenvectors
-quiver(X0, Y0, largest_eigenvec(1)*sqrt(largest_eigenval), largest_eigenvec(2)*sqrt(largest_eigenval), '-m', 'LineWidth',2);
-quiver(X0, Y0, smallest_eigenvec(1)*sqrt(smallest_eigenval), smallest_eigenvec(2)*sqrt(smallest_eigenval), '-g', 'LineWidth',2);
-hold on;
-
-% Set the axis labels
-hXLabel = xlabel('x');
-hYLabel = ylabel('y');

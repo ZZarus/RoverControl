@@ -1,4 +1,4 @@
-nRuns = 500;
+nRuns = 200;
 finalState = zeros(nRuns,11);
 MoonGravity = 1.625;
 sampleRate = 500;
@@ -9,7 +9,7 @@ for j = 1:nRuns
     % set initial conditions and time
     % x y z xd yd zd xdd ydd zdd thrust time
     r = randn([1 10]);
-    sf = [5 5 5 1/50 1/50 1/50 1/5000 1/5000 1/5000 1/5000];
+    sf = [5 5 5 1/5 1/5 1/5 1/500 1/500 1/500 1/500];
     r = r.*sf;
     state = [450+r(1) 0+r(2) 150+r(3) -15+r(4) 0+r(5) -5+r(6) .28125+r(7) 0+r(8) .075+r(9) 1.7571 0];
     pitch = 8.18+r(10);
@@ -79,7 +79,8 @@ for j = 1:nRuns
 end
 hold on
 grid on
- x=linspace(-20,20) ;
+axis equal
+ x=linspace(-50,50) ;
  y=linspace(0,0) ;
  plot(x,y,'k-') ;
  plot(y,x,'k-') ;
