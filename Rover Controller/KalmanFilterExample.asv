@@ -44,31 +44,38 @@ ddencoder = diff(dencoder(:,1)).*sampleRate;
 dencoder2 = zeros(501,1);
 dencoder2(2:end) = ddencoder;
 encoder(:,3) = dencoder2;
+x = zeros(10*sampleRate,3);
 x = [0,.1,0];
-Rimu = eye(3)+.2;
-Rencoder = eye(3)+.2;
+Rimu = [.3 0 0; 0 .1 0; 0 0 .05];
+Rencoder = [.05 0 0; 0 .4 0; 0 0 .7];
 Q = .0001;
-Hencoder = [1,0,0];
-Himu = [0,0,1];
 H = eye(3);
 P = zeros(3,3);
 for i = 1:10*sampleRate
-    xapriori = A*x';
+    xapriori = A*x(i,:)';
     Papriori = A*P*A' + Q;
     K = Papriori*H'/(H*Papriori*H'+Rimu);
-    x(i+1,:) = xapriori+K*(imu(i+1,:)'-H*xapriori);
+    x(i+1,:) = (xapriori+K*(imu(i+1,:)'-H*xapriori));
     P = Papriori-K*H*Papriori;
     K = P*H'*inv(H*P*H'+Rencoder);
-    x(i+1,:) = x(i+1,:)+K*(encoder(i+1,:)'-H*xapriori);
+    x(i+1,:) = x(i+1,:)+(K*(encoder(i+1,:)'-H*xapriori))';
     P = P-K*H*P;
 end
-
-% hold on
-% plot(0:1/sampleRate:10,gTruth(:,1))
-% plot(0:1/sampleRate:10,imu(:,1))
-% plot(0:1/sampleRate:10,encoder(:,1))
-%  figure()
-%  hold on
-% plot(0:1/sampleRate:10,gTruth(:,2))
-% plot(0:1/sampleRate:10,imu(:,2))
-% plot(0:1/sampleRate:10,dencoder(:,1))
+hold on
+plot(0:1/sampleRate:10,gTruth(:,1))
+plot(0:1/sampleRate:10,imu(:,1))
+plot(0:1/sampleRate:10,encoder(:,1))
+plot(0:1/sampleRate:10,x(:,1))
+legend('Ground tr')
+ figure()
+ hold on
+plot(0:1/sampleRate:10,gTruth(:,2))
+plot(0:1/sampleRate:10,imu(:,2))
+plot(0:1/sampleRate:10,dencoder(:,1))
+plot(0:1/sampleRate:10,x(:,2))
+figure()
+hold on
+plot(0:1/sampleRate:10,gTruth(:,3))
+plot(0:1/sampleRate:10,imu(:,3))
+plot(0:1/sampleRate:10,encoder(:,3))
+plot(0:1/sampleRate:10,x(:,3))

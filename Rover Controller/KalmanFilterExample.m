@@ -46,8 +46,8 @@ dencoder2(2:end) = ddencoder;
 encoder(:,3) = dencoder2;
 x = zeros(10*sampleRate,3);
 x = [0,.1,0];
-Rimu = [.3 0 0; 0 .1 0; 0 0 .05];
-Rencoder = [.05 0 0; 0 .4 0; 0 0 .7];
+Rimu = [.4 0 0; 0 .3 0; 0 0 .05];
+Rencoder = [.05 0 0; 0 .6 0; 0 0 .7];
 Q = .0001;
 H = eye(3);
 P = zeros(3,3);
@@ -66,15 +66,20 @@ plot(0:1/sampleRate:10,gTruth(:,1))
 plot(0:1/sampleRate:10,imu(:,1))
 plot(0:1/sampleRate:10,encoder(:,1))
 plot(0:1/sampleRate:10,x(:,1))
+legend('Ground Truth', 'IMU data', 'Encoder Data', 'Filtered Data')
+title('Position Vs. Time')
  figure()
  hold on
 plot(0:1/sampleRate:10,gTruth(:,2))
 plot(0:1/sampleRate:10,imu(:,2))
 plot(0:1/sampleRate:10,dencoder(:,1))
 plot(0:1/sampleRate:10,x(:,2))
+legend('Ground Truth', 'IMU data', 'Encoder Data', 'Filtered Data')
+title('Velocity Vs. Time')
 figure()
 hold on
 plot(0:1/sampleRate:10,gTruth(:,3))
 plot(0:1/sampleRate:10,imu(:,3))
 plot(0:1/sampleRate:10,encoder(:,3))
 plot(0:1/sampleRate:10,x(:,3))
+legend('Ground Truth', 'IMU data', 'Encoder Data', 'Filtered Data')
