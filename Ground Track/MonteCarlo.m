@@ -1,4 +1,4 @@
-nRuns = 200;
+nRuns = 500;
 finalState = zeros(nRuns,11);
 MoonGravity = 1.625;
 sampleRate = 500;
@@ -9,7 +9,7 @@ for j = 1:nRuns
     % set initial conditions and time
     % x y z xd yd zd xdd ydd zdd thrust time
     r = randn([1 10]);
-    sf = [5 5 5 1/5 1/5 1/5 1/500 1/500 1/500 1/500];
+    sf = [5 3 5 1/5 1/7 1/8 1/500 1/800 1/500 1/500]*2;
     r = r.*sf;
     state = [450+r(1) 0+r(2) 150+r(3) -15+r(4) 0+r(5) -5+r(6) .28125+r(7) 0+r(8) .075+r(9) 1.7571 0];
     pitch = 8.18+r(10);
@@ -28,8 +28,8 @@ for j = 1:nRuns
         state(i+1,:) = A*state(i,:)';
         tr = randn(1);
         state(i+1,9) = state(i+1,9) - MoonGravity;
-        state(i+1,10) = state(i,10) + tr/100000;
-        state(i+1,11) = state(i,11)+1/500;
+        state(i+1,10) = state(i,10) + tr/5000;
+        state(i+1,11) = state(i,11) + 1/500;
         state(i+1,7) = state(i+1,7);
         state(i+1,9) = state(i+1,9);
     end

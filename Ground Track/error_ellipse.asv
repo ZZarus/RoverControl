@@ -56,31 +56,6 @@ r_ellipse = [ellipse_x_r;ellipse_y_r]' * R;
 
 % Draw the error ellipse
 plot(r_ellipse(:,1) + X0,r_ellipse(:,2) + Y0,'-')
-
-
-% Get the 95% confidence interval error ellipse
-chisquare_val = 2.4477;
-theta_grid = linspace(0,2*pi);
-phi = angle;
-X0=avg(1);
-Y0=avg(2);
-a=chisquare_val*sqrt(largest_eigenval);
-b=chisquare_val*sqrt(smallest_eigenval);
-
-% the ellipse in x and y coordinates 
-ellipse_x_r  = a*cos( theta_grid );
-ellipse_y_r  = b*sin( theta_grid );
-
-%Define a rotation matrix
-R = [ cos(phi) sin(phi); -sin(phi) cos(phi) ]; 
-
-%let's rotate the ellipse to some angle phi
-r_ellipse = [ellipse_x_r;ellipse_y_r]' * R;
-
-% Draw the error ellipse
-plot(r_ellipse(:,1) + X0,r_ellipse(:,2) + Y0,'-')
-
-
 hold on;
 axis square
 axis square
@@ -92,14 +67,6 @@ hYLabel = ylabel('Cross-Track Miss (m)');
 % Plot the original data
 plot(data(:,1), data(:,2), '.');
 plot(0,0,'X','Color','g')
-% cep
-m1 = mean(data(1,:));
-m2 = mean(data(2,:));
-r = sqrt(m1^2+m2^2);
-th = 0:pi/50:2*pi;
-xunit = r * cos(th);
-yunit = r * sin(th);
-h = plot(xunit, yunit);
 % mindata = min(min(data));
 % maxdata = max(max(data));
 % Xlim([mindata-3, maxdata+3]);
